@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mincheng 的个人兴趣展示页 | 网络空间安全与音乐狂热者</title>
+    <!-- 优先调用系统无衬线字体 -->
+    <style>
+        /* --- 1. CSS Reset & Base Styles (Apple Acoustic) --- */
+        :root {
+            /* 采用深色模式 (Dark Mode) 配色 */
+            --bg-color: #000000; /* 背景使用纯黑 */
+            --content-bg: #111111; /* 内容块深灰背景 */
+            --text-color: #ffffff; /* 极简白色文字 */
+            --text-silver: #a1a1a6; /* 亮银色文字，用于辅助信息 */
+            --accent-color: #e63946; /* 主调黄，沿用提示中的一个强调色 */
+            --link-color: #3498db; /* 链接颜色 */
+            --border-radius: 20px; /* 圆角设计 */
+            --shadow: 0 10px 40px rgba(0,0,0,0.4); /* 精细的阴影 */
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --spacer-base: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-family);
+            font-size: 17px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased; /* 文字平滑 */
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+            letter-spacing: -0.015em;
+            margin-bottom: calc(var(--spacer-base) * 1.5);
+            color: var(--text-color);
+        }
+
+        h1 { font-size: 48px; }
+        h2 { font-size: 34px; border-left: 4px solid var(--accent-color); padding-left: 16px; margin-top: calc(var(--spacer-base) * 2); }
+        h3 { font-size: 24px; margin-top: calc(var(--spacer-base) * 1); }
+
+        p {
+            margin-bottom: var(--spacer-base);
+            color: var(--text-silver);
+        }
+
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #5dade2;
+        }
+
+        ul, ol {
+            margin-bottom: var(--spacer-base);
+            padding-left: 24px;
+            color: var(--text-silver);
+        }
+
+        li {
+            margin-bottom: calc(var(--spacer-base) * 0.5);
+        }
+
+        img, video, audio {
+            max-width: 100%;
+            height: auto;
+            border-radius: calc(var(--border-radius) / 2);
+            margin-bottom: var(--spacer-base);
+        }
+
+        /* --- 2. Layout Components --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: calc(var(--spacer-base) * 2);
+            display: flex;
+            flex-direction: column;
+            gap: calc(var(--spacer-base) * 3);
+            /* 内容居中且保持呼吸感 */
+            align-items: center;
+        }
+
+        section, article, aside, .form-block {
+            background-color: var(--content-bg);
+            padding: calc(var(--spacer-base) * 2.5);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            /* 大量的留白 */
+            margin-bottom: calc(var(--spacer-base) * 2);
+        }
+
+        /* 背景半透明与高斯模糊效果，模拟 Apple 风格 */
+        nav ul, table, aside form {
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+        }
+
+        /* --- 3. Header & Navigation --- */
+        header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacer-base);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: sticky; /* 固定顶部，加高斯模糊 */
+            top: 0;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        nav ul {
+            display: flex;
+            gap: calc(var(--spacer-base) * 1.5);
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            border-radius: calc(var(--border-radius) * 0.75);
+            background-color: rgba(20,20,20,0.5);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 8px 20px;
+        }
+
+        nav a {
+            color: var(--text-silver);
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: var(--text-color);
+        }
+
+        /* --- 4. Main Sections --- */
+        /* 专业 section */
+        #major-section img {
+            width: 80px;
+            height: 80px;
+            margin-right: calc(var(--spacer-base) * 1);
+            object-fit: cover;
+        }
+
+        .profile-title {
+            display: flex;
+            align-items: center;
+        }
+
+        /* 音乐 section */
+        .music-item {
+            margin-bottom: calc(var(--spacer-base) * 2);
+        }
+
+        /* 音频/视频样式 */
+        audio, video {
+            margin-top: calc(var(--spacer-base) * 0.5);
+            width: 100%;
+            outline: none;
+        }
+
+        video {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        /* 乐器 section */
+        .instruments-list {
+            display: flex;
+            gap: var(--spacer-base);
+            flex-wrap: wrap;
+            list-style: none;
+            padding: 0;
+        }
+
+        .instruments-list li {
+            background-color: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 15px;
+            color: var(--text-silver);
+        }
+
+        /* 硬件部分 table 样式 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: var(--spacer-base);
+            font-size: 15px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        th, td {
+            text-align: left;
+            padding: 14px 18px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: var(--text-silver);
+        }
+
+        th {
+            background-color: rgba(255,255,255,0.05);
+            color: var(--text-color);
+            font-weight: 600;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* --- 5. Aside & Form --- */
+        aside form {
+            display: flex;
+            flex-direction: column;
+            gap: calc(var(--spacer-base) * 0.75);
+        }
+
+        input[type="text"], input[type="email"], textarea {
+            padding: 12px 18px;
+            background-color: #1a1a1c;
+            border: 1px solid rgba(255,255,255,0.05);
+            color: var(--text-color);
+            font-family: var(--font-family);
+            border-radius: 12px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        textarea {
+            resize: vertical;
+            height: 100px;
+        }
+
+        button {
+            padding: 12px 24px;
+            background-color: var(--accent-color);
+            color: #ffffff;
+            font-family: var(--font-family);
+            font-weight: 600;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+
+        button:hover {
+            background-color: #f14f5a;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        /* --- 6. Footer --- */
+        footer {
+            width: 100%;
+            padding: calc(var(--spacer-base) * 2) var(--spacer-base);
+            background-color: rgba(20,20,20,0.9);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+            font-size: 13px;
+            color: #6e6e73;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            h1 { font-size: 34px; }
+            h2 { font-size: 28px; }
+            h3 { font-size: 20px; }
+            .container { padding: var(--spacer-base); }
+            section, article, aside, .form-block { padding: var(--spacer-base); }
+            th, td { padding: 10px; font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. Header (HTML5 语义化标签) -->
+    <header>
+        <h1>mincheng.</h1>
+        <!-- 2. Navigation (语义化标签) -->
+        <nav>
+            <ul>
+                <li><a href="#major-section">专业</a></li>
+                <li><a href="#music-section">音乐</a></li>
+                <li><a href="#gear-section">硬件</a></li>
+                <li><a href="#nj-section">粉丝</a></li>
+                <li><a href="#aside-section">更多</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 3. Main (语义化标签) -->
+    <main class="container">
+
+        <!-- A. "Profile" / 账户资料 section -->
+        <section id="major-section">
+            <div class="profile-title">
+                <!-- 图像img (placeholder base64 for self-contained file) -->
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiMzMzMiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZkMTY2IiBzdHJva2Utd2lkdGg9IjUiLz48dGV4dCB4PSI1MCIgeT0iNjUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjQwIiBmaWxsPSIjZmZkMTY2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5KPC90ZXh0Pjwvc3ZnPg==" alt="Jace 的头像占位符">
+                <div class="profile-text">
+                    <h2>mincheng</h2>
+                    <p>网络空间安全专业本科生 | 音乐狂热者</p>
+                </div>
+            </div>
+            <article>
+                <h3>网络空间安全 (Cybersecurity)</h3>
+                <!-- 段落p -->
+                <p>
+                    我的专业不仅仅是学术追求，更是一种思维方式。在数字世界的这一端，我专注于探索攻防之道、CTF 竞赛以及零信任架构。我相信理解系统深处的机制，是建立坚不可摧 defense 的关键。目前正投入于密码学应用及安全软件开发的深入研究中。
+                </p>
+                <p>
+                    对技术内核的深度挖掘，正如我在音乐和硬件上的不懈探索。
+                </p>
+            </article>
+        </section>
+
+        <!-- B. "Music" / 音乐爱好 section -->
+        <section id="music-section">
+            <article class="music-item">
+                <h2>音乐爱好</h2>
+                <!-- 无序列表ul -->
+                <ul>
+                    <li>摇滚 (Rock): 爱上它提供的原始能量和表达力。</li>
+                    <li>嘻哈 (Hiphop): 喜欢节奏的力量和富有思想的歌词。</li>
+                    <li>爵士 (Jazz): 享受即兴的复杂性和它的情绪色彩。</li>
+                    <li>少量古典 (Classic): 欣赏结构、复杂度和情感的交织。</li>
+                </ul>
+                <p>分享一首让我充满活力的 Rock：</p>
+                <!-- 多媒体组件：音频 audio -->
+                <audio controls>
+                    <source src="07. Linkin Park - By Myself  [USWB11201117].flac" type="audio/flac">
+                    您的浏览器不支持音频播放。
+                </audio>
+            </article>
+
+            <article class="music-item">
+                <h3>擅长乐器</h3>
+                <p>我通过乐器与音乐对话，它们是我的第二语言。</p>
+                <!-- 乐器列表 (自定义样式样式li) -->
+                <ul class="instruments-list">
+                    <li>电吉他 (Expression)</li>
+                    <li>贝斯 (Foundation)</li>
+                </ul>
+                <p>最近在练习一首富有挑战性的 Funk Bass Riff：</p>
+                <!-- 多媒体组件：视频 video -->
+                <video controls>
+                    <source src="贝斯solo.mp4" type="video/mp4">
+                    您的浏览器不支持视频播放。
+                </video>
+            </article>
+        </section>
+
+        <!-- C. "Gear" / 计算机硬件研究 section -->
+        <section id="gear-section">
+            <h2>计算机硬件研究</h2>
+            <article>
+                <p>除了数字安全，我对物理硬件同样充满热情。探索 CPU 架构、GPU 性能优化、高性能存储以及 custom water cooling 环路设计是我的业余主要兴趣。</p>
+                <p>以下是我当前的 dummy build 关键组件对比及 notes：</p>
+
+                <!-- 表格 table -->
+                <table>
+                    <thead>
+                        <tr>
+                            <th>组件</th>
+                            <th>Dummy 型号</th>
+                            <th>备注 /Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>处理器 (CPU)</td>
+                            <td>Doodle Core i9-14900K</td>
+                            <td>追求极限性能，超频潜力巨大</td>
+                        </tr>
+                        <tr>
+                            <td>显卡 (GPU)</td>
+                            <td>Acoustic RTX 4090 D</td>
+                            <td>不仅用于游戏，更用于 AI 安全模型训练</td>
+                        </tr>
+                        <tr>
+                            <td>存储 (SSD)</td>
+                            <td>SilverDrive Pro 4TB (PCIe 5.0)</td>
+                            <td>惊人的读写速度，提升系统响应</td>
+                        </tr>
+                        <tr>
+                            <td>主板 (MB)</td>
+                            <td>Z790 Premium Elite</td>
+                            <td>强大的供电，保证超频稳定</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- 超链接 a -->
+                <p>点击这里 <a href="https://example.com/hardware-reviews" target="_blank" rel="noopener">查看 dummy 硬件评测 (外部链接)</a>。</p>
+            </article>
+        </section>
+
+        <!-- D. "NewJeans" / 其他兴趣 section -->
+        <article id="nj-section">
+            <h2>NewJeans 忠实粉丝</h2>
+            <article>
+                <p>
+                    在严肃的技术研究和音乐练习之余，我被 NewJeans 的清新风格和高质量制作深深吸引。从《Attention》到《Super Shy》，她们展现了一种独特的、充满呼吸感的 geek-chic 潮流。我也非常欣赏 Min Heejin 的视觉艺术指导。
+                </p>
+                <!-- 图像img (placeholder base64) -->
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAnIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMzAwIDIwMCI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiMxYTFhMWMiLz48dGV4dCB4PSIxNTAiIHk9IjExMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiNmZmQxNjYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPk5ld0plYW5zIEZhbiBBcnQ8L3RleHQ+PC9zdmc+" alt="NewJeans 占位符图片">
+
+                <h3> dummy 收藏单：</h3>
+                <!-- 有序列表ol -->
+                <ol>
+                    <li>《Attention》- 第一眼震撼</li>
+                    <li>《OMG》- 复杂的制作</li>
+                    <li>《Super Shy》- 极简且迷人</li>
+                    <li>《ETA》- 独特的叙事</li>
+                </ol>
+                <p>点击这里 <a href="https://www.youtube.com/@NewJeans_official" target="_blank" rel="noopener">访问 NewJeans 官方 YouTube 频道</a>。</p>
+            </article>
+        </article>
+
+        <!-- 4. Aside (HTML5 语义化标签) -->
+        <aside id="aside-section">
+            <h2>联系我</h2>
+            <p>如果您对我的研究或音乐有兴趣，欢迎通过以下表单联系 dummy：</p>
+            <!-- 交互表单form (含 input, button) -->
+            <form action="example.com/submit-form" method="post">
+                <input type="text" name="name" placeholder="您的姓名" required>
+                <input type="email" name="email" placeholder="您的邮箱" required>
+                <textarea name="message" placeholder="您的留言..." required></textarea>
+                <button type="submit">发送留言</button>
+            </form>
+        </aside>
+
+    </main>
+
+    <!-- 5. Footer (语义化标签) -->
+    <footer>
+        <p>Copyright &copy; 2026 mincheng. All Rights Reserved.</p>
+        <p>Built with passion | Powered by dummy. Validated <a href="https://validator.w3.org/" target="_blank" rel="noopener">HTML5 &amp; CSS3</a> (not verified in this dummy text).</p>
+    </footer>
+
+</body>
+</html>
